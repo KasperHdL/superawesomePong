@@ -7,7 +7,12 @@ public class PlanetSlices : MonoBehaviour {
 	public List<RectTransform> slices;
 	public List<Image> images;
 	
+	public Color[] colors;
+	public KeyCode[] lefts;
+	public KeyCode[] rights;
+	
 	public GameObject slicePrefab;
+	public GameObject paddlePrefab;
 
 	public int numPlayers;
 
@@ -18,16 +23,27 @@ public class PlanetSlices : MonoBehaviour {
 
 
 		float lastAngle = 0;
+		float ratio = (float) 1 / numPlayers;
 		
 		for(int i = 0; i < numPlayers ; i++){
+			GameObject player = Instantiate(paddlePrefab, Vector3.zero, Quaternion.identity) as GameObject;
 			
 			GameObject g = Instantiate(slicePrefab, Vector3.zero, Quaternion.identity) as GameObject;
 			g.transform.SetParent(transform, false);
 			slices.Add(g.transform as RectTransform);
 			images.Add(g.GetComponent<Image>());
 
+			images[i].color = colors[i];
 			images[i].fillAmount = (float)1 / numPlayers;
 			slices[i].Rotate(0,0,lastAngle * 360);
+
+			Paddle paddle = player.GetComponent<Paddle>();
+			paddle.angle = (lastAngle) * Mathf.PI * 2; 
+			paddle.MinRad = (lastAngle - ratio/2) * Mathf.PI * 2;
+			paddle.MaxRad = (lastAngle + ratio/2) * Mathf.PI * 2;
+
+			paddle.left = lefts[i];
+			paddle.right = rights[i];
 			
 			lastAngle = (float)1 / numPlayers + lastAngle;
 		
