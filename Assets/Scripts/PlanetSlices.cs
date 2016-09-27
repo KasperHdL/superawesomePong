@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlanetSlices : MonoBehaviour {
+	public int numPlayers;
 	public List<RectTransform> slices;
 	public List<Image> images;
 	
@@ -14,13 +15,15 @@ public class PlanetSlices : MonoBehaviour {
 	public GameObject slicePrefab;
 	public GameObject paddlePrefab;
 
-	public int numPlayers;
+	public ScoreDisplay display;
+
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		slices = new List<RectTransform>(numPlayers);
 		images = new List<Image>(numPlayers);
 
+		display.numPlayers = numPlayers;
 
 		float lastAngle = 0;
 		float ratio = (float) 1 / numPlayers;

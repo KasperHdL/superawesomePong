@@ -9,6 +9,7 @@ public class ScoreDisplay : MonoBehaviour {
 	public GameObject scorePrefab;
 	public Transform planet;
 	
+	[HideInInspector]
 	public int numPlayers;
 	public float offset = 35;
 	// Use this for initialization
@@ -17,6 +18,7 @@ public class ScoreDisplay : MonoBehaviour {
 		scores = new List<int>(numPlayers);
 		
 		float lastAngle = 0;
+		float ratio = (float) 1 / numPlayers;
 		for(int i = 0; i < numPlayers; i++){
 			GameObject g = Instantiate(scorePrefab, Vector3.zero, Quaternion.identity) as GameObject;
 
@@ -24,8 +26,8 @@ public class ScoreDisplay : MonoBehaviour {
 			scoreTexts.Add(g.GetComponent<Text>());
 			scores.Add(0);
 			
-			float angle = lastAngle * -Mathf.PI * 2 - ((float) 1/(numPlayers/2)) * Mathf.PI * 2;
-			g.transform.localPosition = new Vector3(Mathf.Cos(angle) * offset, Mathf.Sin(angle) * offset,0);
+			float angle = ratio * ((numPlayers - 2) * (Mathf.PI/2))  - i * ratio * Mathf.PI * 2;
+			g.transform.localPosition = new Vector3(-Mathf.Cos(angle) * offset, -Mathf.Sin(angle) * offset,0);
 
 			lastAngle = (float) 1 / numPlayers + lastAngle;
 		
