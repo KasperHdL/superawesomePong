@@ -4,7 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ScoreDisplay : MonoBehaviour {
+	[HideInInspector]
 	public List<Text> scoreTexts;
+	
+	[HideInInspector]
 	public List<int> scores;
 	public GameObject scorePrefab;
 	public Transform planet;

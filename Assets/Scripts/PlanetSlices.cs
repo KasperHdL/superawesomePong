@@ -5,8 +5,11 @@ using System.Collections.Generic;
 
 public class PlanetSlices : MonoBehaviour {
 	public int numPlayers;
-	public List<RectTransform> slices;
-	public List<Image> images;
+
+	[HideInInspector]
+	private List<RectTransform> slices;
+	[HideInInspector]
+	private List<Image> images;
 	
 	public Color[] colors;
 	public KeyCode[] lefts;
@@ -41,9 +44,11 @@ public class PlanetSlices : MonoBehaviour {
 			slices[i].Rotate(0,0,lastAngle * 360);
 
 			Paddle paddle = player.GetComponent<Paddle>();
-			paddle.angle = (lastAngle) * Mathf.PI * 2; 
-			paddle.MinRad = (lastAngle - ratio/2) * Mathf.PI * 2;
-			paddle.MaxRad = (lastAngle + ratio/2) * Mathf.PI * 2;
+			float angle = ratio * (numPlayers - 2) * (Mathf.PI/2)  - i * ratio * Mathf.PI * 2;
+
+			paddle.angle = -angle; 
+			paddle.MinRad = -angle - ratio * Mathf.PI;
+			paddle.MaxRad = -angle + ratio * Mathf.PI;
 
 			paddle.left = lefts[i];
 			paddle.right = rights[i];
