@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Paddle : MonoBehaviour {
 
+    public int index;
+    public Color color;
+
     public float angle;
     public float speed = 2;
 
@@ -12,7 +15,7 @@ public class Paddle : MonoBehaviour {
     public float MaxRad;
     public float MinRad;
     
-
+    public SpriteRenderer ellipse;
 
 	// Update is called once per frame
 	void Update () {
@@ -20,11 +23,11 @@ public class Paddle : MonoBehaviour {
         
 	    if(Input.GetKey(right))
         {
-            angle -= Time.deltaTime * 2;
+            angle -= Time.deltaTime * speed;
         }
         else if(Input.GetKey(left))
         {
-            angle += Time.deltaTime * 2;
+            angle += Time.deltaTime * speed;
         }
         if(angle < MinRad)
             angle = MinRad;

@@ -11,15 +11,6 @@ public class Scorer : MonoBehaviour {
 	}
 	public ScoreMethod method;
 	public ScoreDisplay display;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	void OnCollisionEnter2D(Collision2D coll){
 		if(coll.gameObject.tag == "Ball"){
@@ -36,9 +27,25 @@ public class Scorer : MonoBehaviour {
 				for (int j = 0; j < display.numPlayers; j++)
 				{
 					if(i == j)continue;
-					display.scores[j]++;
+					display.scores[j]--;
 					
 				}
+			}else if(method == ScoreMethod.LastPlayer){
+				BallScorer b = coll.gameObject.GetComponent<BallScorer>();
+				if(b.indexOfLastPlayer == i){
+					if(display.scores[i] > 0){
+						for (int j = 0; j < display.numPlayers; j++)
+							{
+								if(i == j)continue;
+								display.scores[j]++;
+								
+							}
+					}
+				}else if(b.indexOfLastPlayer != -1){
+					display.scores[b.indexOfLastPlayer]++;
+				}
+				
+				
 			}
 			
 		}

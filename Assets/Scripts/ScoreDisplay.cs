@@ -27,7 +27,7 @@ public class ScoreDisplay : MonoBehaviour {
 
 			g.transform.SetParent(transform,false);
 			scoreTexts.Add(g.GetComponent<Text>());
-			scores.Add(0);
+			scores.Add(10);
 			
 			float angle = ratio * ((numPlayers - 2) * (Mathf.PI/2))  - i * ratio * Mathf.PI * 2;
 			g.transform.localPosition = new Vector3(-Mathf.Cos(angle) * offset, -Mathf.Sin(angle) * offset,0);
