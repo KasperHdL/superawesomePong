@@ -22,9 +22,15 @@ public class PlanetSlices : MonoBehaviour {
 	public ScoreDisplay display;
 	public Gravity gravity;
 
+private bool stopping = false;
 
 	// Use this for initialization
 	void Awake () {
+		
+		reset();
+	
+	}
+	void reset(){
 		slices = new List<RectTransform>(numPlayers);
 		images = new List<Image>(numPlayers);
 
@@ -51,7 +57,7 @@ public class PlanetSlices : MonoBehaviour {
 			paddle.angle = -angle; 
 			paddle.MinRad = -angle - ratio * Mathf.PI;
 			paddle.MaxRad = -angle + ratio * Mathf.PI;
-
+			
 			paddle.left = lefts[i];
 			paddle.right = rights[i];
 			
@@ -64,17 +70,45 @@ public class PlanetSlices : MonoBehaviour {
 
 		float ballAngle = ratio * (numPlayers - 2) * (Mathf.PI/2) - randomStart * ratio * Mathf.PI * 2;
 		
-        var x = Mathf.Cos(ballAngle) * 7f;
-        var y = Mathf.Sin(ballAngle) * 7f;
+        var x = Mathf.Cos(-ballAngle) * 7f;
+        var y = Mathf.Sin(-ballAngle) * 7f;
 		
         b.transform.position = new Vector3(x, y, 0);
 		gravity.bodies.Add(b.GetComponent<Rigidbody2D>());
 	
+}
+
 	
-	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(stopping)return;
+		for (int i = 0; i < display.numPlayers; i++)
+		{
+			if(display.scores[i] >= 10){
+				StartCoroutine(slowDownAndReset());
+				
+			}
+			
+		}
+	}
+
+	IEnumerator slowDownAndReset(){
+		float length = 1f;
+		float startTime = Time.unscaledTime;
+		float start = 1f;
+		float end = 0f;
+		float t = 0f;
+
+		stopping = true;
+		while(t < 1f){
+			t = (Time.unscaledTime - startTime) / length;
+			Time.timeScale = Mathf.Lerp(start, end, t);
+			yield return null;
+		}
+		Time.timeScale = 1f;
+		Application.LoadLevel(0);
+
+		
 	}
 }

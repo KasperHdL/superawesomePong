@@ -16,6 +16,8 @@ public class Paddle : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        
+        
 	    if(Input.GetKey(right))
         {
             angle -= Time.deltaTime * 2;
@@ -32,6 +34,6 @@ public class Paddle : MonoBehaviour {
         var x = Mathf.Cos(angle) * 2.66f;
         var y = Mathf.Sin(angle) * 2.66f;
         transform.position = new Vector3(x, y, 0);
-        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg + 90);
+        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg - 90);
 	}
 }
