@@ -18,7 +18,9 @@ public class PlanetSlices : MonoBehaviour {
 	public GameObject slicePrefab;
 	public GameObject paddlePrefab;
 
+	public GameObject ballPrefab;
 	public ScoreDisplay display;
+	public Gravity gravity;
 
 
 	// Use this for initialization
@@ -56,7 +58,18 @@ public class PlanetSlices : MonoBehaviour {
 			lastAngle = (float)1 / numPlayers + lastAngle;
 		
 		}
+
+		int randomStart = Random.Range(0,numPlayers);
+		GameObject b = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+
+		float ballAngle = ratio * (numPlayers - 2) * (Mathf.PI/2) - randomStart * ratio * Mathf.PI * 2;
 		
+        var x = Mathf.Cos(ballAngle) * 7f;
+        var y = Mathf.Sin(ballAngle) * 7f;
+		
+        b.transform.position = new Vector3(x, y, 0);
+		gravity.bodies.Add(b.GetComponent<Rigidbody2D>());
+	
 	
 	}
 	

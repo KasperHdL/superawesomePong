@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Gravity : MonoBehaviour {
-	public Rigidbody2D[] bodies;
+	public List<Rigidbody2D> bodies;
 	public float gravityCoef_oneOverDistSqr;
 	public float gravityCoef_distSqr;
 	public float gravityCoef_dist;
@@ -21,7 +22,7 @@ public class Gravity : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		for(int i = 0;i < bodies.Length;i++){
+		for(int i = 0;i < bodies.Count;i++){
 			Vector3 delta =(transform.position - bodies[i].transform.position);
 			switch(calculationMethod){
 				case CalcMethod.oneOverDistanceSquared:
