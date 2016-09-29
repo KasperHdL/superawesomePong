@@ -82,8 +82,6 @@ private bool stopping = false;
 		
 		}
 		spawnBall();
-		spawnBall();
-
 	
 }
 void spawnBall(){
@@ -108,7 +106,7 @@ void spawnBall(){
 		if(stopping)return;
 		for (int i = 0; i < display.numPlayers; i++)
 		{
-			if(display.scores[i] == 0){
+			if(display.scores[i] <= 0){
 				StartCoroutine(slowDownAndReset());
 				
 			}

@@ -22,7 +22,11 @@ public class Scorer : MonoBehaviour {
 			int i = (int)(a / ((float)1 / display.numPlayers * 360));
 				
 			if(method == ScoreMethod.OnHit){
-				display.scores[i]++;
+				BallScorer b = coll.gameObject.GetComponent<BallScorer>();
+                if(b.indexOfLastPlayer == i)
+                    display.scores[i] -= 2;
+                else
+                    display.scores[i]--;
 			}else if(method == ScoreMethod.EveryoneElseOnHit){
 				for (int j = 0; j < display.numPlayers; j++)
 				{

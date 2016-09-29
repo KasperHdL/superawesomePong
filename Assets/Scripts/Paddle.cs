@@ -16,24 +16,53 @@ public class Paddle : MonoBehaviour {
     public float MinRad;
     
     public SpriteRenderer ellipse;
+    public bool useKeyboard;
 
+    Vector2 midNormal;
+
+    void Start(){
+        midNormal = Vector3.Cross(new Vector2(Mathf.Cos(angle), Mathf.Sin(-angle)), Vector3.forward);
+    }
 	// Update is called once per frame
 	void Update () {
-        
-        
-	    if(Input.GetKey(right))
-        {
-            angle -= Time.deltaTime * speed;
+        if(useKeyboard){
+            
+            if(Input.GetKey(right))
+            {
+                angle -= Time.deltaTime * speed;
+            }
+            else if(Input.GetKey(left))
+            {
+                angle += Time.deltaTime * speed;
+            }
+        }else{
+
+            float h,v;
+            h = Input.GetAxis("Horizontal_" + index);
+            v = Input.GetAxis("Vertical_" + index);
+            
+            Vector2 dir = new Vector2(h, v);
+//            if(dir.magnitude < 0.2f) dir = Vector2.zero;
+            dir = dir.normalized;
+
+   //         Debug.Log("dir: " + dir + " midN: " + midNormal);
+
+            float projected = Vector2.Dot(dir, midNormal);
+//            Debug.Log(projected);
+            if(projected != 0)
+                projected = Mathf.Sign(projected);
+ //           Debug.Log(projected);
+  //          Debug.Log("");
+
+            angle += projected * speed * Time.deltaTime;
         }
-        else if(Input.GetKey(left))
-        {
-            angle += Time.deltaTime * speed;
-        }
-        if(angle < MinRad)
+
+       if(angle < MinRad)
             angle = MinRad;
         if(angle > MaxRad)
             angle = MaxRad;
-        
+ 
+
         var x = Mathf.Cos(angle) * 2.66f;
         var y = Mathf.Sin(angle) * 2.66f;
         transform.position = new Vector3(x, y, 0);
